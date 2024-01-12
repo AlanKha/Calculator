@@ -1,49 +1,96 @@
-html {
-    background-color: dimgrey;
-    height: 100%;
-}
-
 body {
+    font-family: 'Arial', sans-serif;
     margin: 0;
-    height: 100%;
+    padding: 0;
 }
 
-* {
+.container {
+    max-width: 400px;
+    margin: 50px auto;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+    background-color: #333;
+    color: #fff;
     text-align: center;
-    border: 2px solid red;
+    padding: 15px;
+}
+
+.calculator {
+    display: flex;
+    flex-direction: column;
+}
+
+.screen {
+    background-color: #f5f5f5;
+    padding: 10px;
+    text-align: right;
+    min-height: 50px; 
+    overflow: hidden;
+}
+
+.previous {
+    font-size: 0.8em;
+    color: #777;
+}
+
+.current {
+    font-size: 1.5em;
+}
+
+
+.buttons {
+    display: grid;
+    gap: 1px;
+}
+
+.row {
+    display: flex;
+}
+
+button {
+    width: 100%;
+    padding: 15px;
+    font-size: 1.2em;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
     box-sizing: border-box;
 }
 
-/* Container */
-
-.container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
+button:hover {
+    background-color: #eee;
 }
 
-/* Calculator */
-
-.calculator{
-    height: 70vh;
-    width: 40vw;
-    background-color: black;
-    border-radius: 30px;
+.number {
+    background-color: #f9f9f9;
 }
 
-/* display */
-
-.screen input{
-    height: 10vh;
-    width: 85%;
-    margin: 20px;
-    border-radius: 30px;
+.number.double {
+    width: calc(2.34 * 100%);
+    font-size: 1.2em; /* Adjust the font size as needed */
+    padding: 15px;   /* Adjust the padding as needed */
 }
 
-/* buttons */
+.operator {
+    background-color: #ff9800;
+    color: #fff;
+}
 
-.buttons{
-    height: 50vh;
+#clear {
+    grid-area: clear;
+    background-color: #e57373;
+    color: #fff;
+}
+
+#footer-text {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+    margin-top: 20px;
 }

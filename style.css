@@ -1,0 +1,49 @@
+html {
+    background-color: dimgrey;
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    height: 100%;
+}
+
+* {
+    text-align: center;
+    border: 2px solid red;
+    box-sizing: border-box;
+}
+
+/* Container */
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+/* Calculator */
+
+.calculator{
+    height: 70vh;
+    width: 40vw;
+    background-color: black;
+    border-radius: 30px;
+}
+
+/* display */
+
+.screen input{
+    height: 10vh;
+    width: 85%;
+    margin: 20px;
+    border-radius: 30px;
+}
+
+/* buttons */
+
+.buttons{
+    height: 50vh;
+}

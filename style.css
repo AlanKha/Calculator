@@ -81,6 +81,11 @@ button:hover {
     color: #fff;
 }
 
+#equals {
+    background-color: #ff9800;
+    color: #fff;
+}
+
 #clear {
     grid-area: clear;
     background-color: #e57373;

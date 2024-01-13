@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
     const numbers = document.querySelectorAll('.number');
     const currentScreen = document.querySelector('.current');
     const prevScreen = document.querySelector('.previous');
@@ -7,28 +7,39 @@ document.addEventListener("DOMContentLoaded", function() {
     const clearButton = document.querySelector('#clear');
     const percentButton = document.querySelector('#percentage')
     const signButton = document.querySelector('#sign')
+
+    function checkforEquals() {
+        if (prevScreen.textContent.slice(-1) == '=') {
+            prevScreen.textContent = ''
+        }
+    }
+
     clearButton.onclick = () => {
         currentScreen.textContent = '';
         prevScreen.textContent = '';
     };
 
     signButton.onclick = () => {
+        checkforEquals()
         const currentNumber = parseFloat(currentScreen.textContent);
         currentScreen.textContent = -currentNumber;
     };
 
     percentButton.onclick = () => {
+        checkforEquals()
         currentScreen.textContent = parseFloat(currentScreen.textContent) / 100
     }
 
     numbers.forEach(number => {
         number.onclick = () => {
+            checkforEquals()
             currentScreen.textContent += number.textContent;
         };
     });
 
     operators.forEach(operator => {
         operator.onclick = () => {
+            checkforEquals()
             prevScreen.textContent += currentScreen.textContent + operator.textContent;
             currentScreen.textContent = '';
         };

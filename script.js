@@ -1,57 +1,93 @@
-document.addEventListener("DOMContentLoaded", function () {
-    const numbers = document.querySelectorAll('.number');
-    const currentScreen = document.querySelector('.current');
-    const prevScreen = document.querySelector('.previous');
-    const operators = document.querySelectorAll('.operator');
-    const equalsButton = document.querySelector('#equals');
-    const clearButton = document.querySelector('#clear');
-    const percentButton = document.querySelector('#percentage')
-    const signButton = document.querySelector('#sign')
+class calculator {
+    constructor(prevScreen, currentScreen){
+        this.prevScreen = prevScreen
+        this.currentScreen = currentScreen
+        this.clear()
+    }
 
-    function checkforEquals() {
-        if (prevScreen.textContent.slice(-1) == '=') {
-            prevScreen.textContent = ''
+    clear(){
+        this.currentScreen.textContent = ''
+        this.prevScreen.textContent = ''
+    }
+
+    appendNumber(number){
+        this.checkforEquals()
+        this.currentScreen.textContent += number.textContent
+    }
+
+    appendSign(sign){
+        this.checkforEquals()
+        this.prevScreen.textContent += this.currentScreen.textContent + sign.textContent
+        this.currentScreen.textContent = ''
+    }
+    
+    checkforEquals() {
+        if (this.prevScreen.textContent.slice(-1) == '=') {
+            this.prevScreen.textContent = ''
         }
     }
 
+    changeSign(){
+        this.checkforEquals()
+        this.currentScreen.textContent = -(parseFloat(this.currentScreen.textContent))
+    }
+
+    toPercentage(){
+        this.checkforEquals()
+        this.currentScreen.textContent = parseFloat(this.currentScreen.textContent) / 100
+    }
+
+    calculate(){
+        try {
+            let total = math.evaluate(this.prevScreen.textContent + this.currentScreen.textContent)
+            this.prevScreen.textContent += this.currentScreen.textContent + '='
+            this.currentScreen.textContent = total
+        } catch (error) {
+            console.error("Error in calculation:", error.message)
+        }
+    }
+}
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const numbers = document.querySelectorAll('.number')
+    const currentScreen = document.querySelector('.current')
+    const prevScreen = document.querySelector('.previous')
+    const operators = document.querySelectorAll('.operator')
+    const equalsButton = document.querySelector('#equals')
+    const clearButton = document.querySelector('#clear')
+    const percentButton = document.querySelector('#percentage')
+    const signButton = document.querySelector('#sign')
+
+    const calc = new calculator(prevScreen, currentScreen)
+
+
     clearButton.onclick = () => {
-        currentScreen.textContent = '';
-        prevScreen.textContent = '';
-    };
+        calc.clear()
+    }
 
     signButton.onclick = () => {
-        checkforEquals()
-        const currentNumber = parseFloat(currentScreen.textContent);
-        currentScreen.textContent = -currentNumber;
-    };
+        calc.changeSign()
+    }
 
     percentButton.onclick = () => {
-        checkforEquals()
-        currentScreen.textContent = parseFloat(currentScreen.textContent) / 100
+        calc.toPercentage()
     }
 
     numbers.forEach(number => {
         number.onclick = () => {
-            checkforEquals()
-            currentScreen.textContent += number.textContent;
-        };
-    });
+            calc.appendNumber(number)
+        }
+    })
 
     operators.forEach(operator => {
         operator.onclick = () => {
-            checkforEquals()
-            prevScreen.textContent += currentScreen.textContent + operator.textContent;
-            currentScreen.textContent = '';
-        };
-    });
+            calc.appendSign(operator)
+        }
+    })
 
     equalsButton.onclick = () => {
-        try {
-            let total = math.evaluate(prevScreen.textContent + currentScreen.textContent);
-            prevScreen.textContent += currentScreen.textContent + '=';
-            currentScreen.textContent = total;
-        } catch (error) {
-            console.error("Error in calculation:", error.message);
-        }
-    };
-});
+        calc.calculate()
+    }
+})

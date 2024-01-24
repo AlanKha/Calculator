@@ -1,43 +1,62 @@
 class calculator {
-    constructor(prevScreen, currentScreen){
+    constructor(prevScreen, currentScreen) {
         this.prevScreen = prevScreen
         this.currentScreen = currentScreen
         this.clear()
     }
 
-    clear(){
+    clear() {
         this.currentScreen.textContent = ''
         this.prevScreen.textContent = ''
     }
 
-    appendNumber(number){
-        this.checkforEquals()
-        this.currentScreen.textContent += number.textContent
+    checkforDecimal(number) {
+        if (number.textContent == '.' && this.currentScreen.textContent.slice(-1) == '.') {
+            return true
+        }
+        return false;
     }
 
-    appendSign(sign){
-        this.checkforEquals()
-        this.prevScreen.textContent += this.currentScreen.textContent + sign.textContent
-        this.currentScreen.textContent = ''
-    }
-    
     checkforEquals() {
         if (this.prevScreen.textContent.slice(-1) == '=') {
             this.prevScreen.textContent = ''
         }
     }
 
-    changeSign(){
-        this.checkforEquals()
-        this.currentScreen.textContent = -(parseFloat(this.currentScreen.textContent))
+
+    checkforSign() {
+        const ops = new Set(['*', '/', '+', '-'])
+        if (this.currentScreen.textContent == '' && ops.has(this.prevScreen.textContent.slice(-1))) {
+            return true
+        }
+        return false
+
     }
 
-    toPercentage(){
+    appendNumber(number) {
+        this.checkforEquals()
+        if (this.checkforDecimal(number)) return
+        this.currentScreen.textContent += number.textContent
+    }
+
+    appendSign(sign) {
+        this.checkforEquals()
+        if (this.checkforSign()) return
+        this.prevScreen.textContent += this.currentScreen.textContent + sign.textContent
+        this.currentScreen.textContent = ''
+    }
+
+    changeSign() {
+        this.checkforEquals()
+        this.currentScreen.textContent = `(-${this.currentScreen.textContent})`
+    }
+
+    toPercentage() {
         this.checkforEquals()
         this.currentScreen.textContent = parseFloat(this.currentScreen.textContent) / 100
     }
 
-    calculate(){
+    calculate() {
         try {
             let total = math.evaluate(this.prevScreen.textContent + this.currentScreen.textContent)
             this.prevScreen.textContent += this.currentScreen.textContent + '='

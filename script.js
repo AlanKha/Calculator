@@ -24,13 +24,9 @@ class calculator {
     }
 
 
-    checkforSign() {
-        const ops = new Set(['*', '/', '+', '-'])
-        if (this.currentScreen.textContent == '' && ops.has(this.prevScreen.textContent.slice(-1))) {
-            return true
-        }
+    checkforEmpty() {
+        if(this.currentScreen.textContent == '') return true
         return false
-
     }
 
     appendNumber(number) {
@@ -41,14 +37,23 @@ class calculator {
 
     appendSign(sign) {
         this.checkforEquals()
-        if (this.checkforSign()) return
+        if (this.checkforEmpty()) return
         this.prevScreen.textContent += this.currentScreen.textContent + sign.textContent
         this.currentScreen.textContent = ''
     }
 
     changeSign() {
         this.checkforEquals()
-        this.currentScreen.textContent = `(-${this.currentScreen.textContent})`
+        if(this.checkforEmpty()) return
+        let currentNum = this.currentScreen.textContent
+        
+        if(currentNum.charAt(0) == '(' && currentNum.charAt(currentNum.length - 1) == ')')
+        {
+            this.currentScreen.textContent = currentNum.slice(2, currentNum.length - 1)
+        }
+        else{
+            this.currentScreen.textContent = `(-${this.currentScreen.textContent})`
+        }
     }
 
     toPercentage() {
